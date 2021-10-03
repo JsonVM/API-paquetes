@@ -43,9 +43,9 @@ let reservas: Reservas = {
     fecha_salida: new Date(),
     numero_adultos: 2,
     numero_niños: 2,
-    cliente: '2',
-    nombre_completo: 'Maria Fernanda Henao',
-    e_mail: 'mariafernandahenaoherrera@gmail.com',
+    cliente: '3',
+    nombre_completo: 'Mateo Montoya aristizabal',
+    e_mail: 'mateomon2882@gmail.com',
     numero_telefonico: '3195097744',
     ciudad_residencia: 'Envigado'
   }

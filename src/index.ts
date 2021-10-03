@@ -8,6 +8,7 @@ import cors from "cors";
 import helmet from "helmet";
 import { paquetesRouter } from "./paquetes/paquetes.router";
 import { reservasRouter } from "./reservas/reservas.router";
+import { facturasRouter } from "./facturaReserva/facturasReservas.router";
 
 
 import { errorHandler } from "./middleware/error.middleware";
@@ -36,6 +37,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/v1/paquetes", paquetesRouter);
 app.use("/api/v1/reservas", reservasRouter);
+app.use("/api/v1/facturasReservas", facturasRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
