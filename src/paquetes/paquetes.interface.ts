@@ -1,4 +1,4 @@
-// src/items/items.interface.ts
+// src/paquetes/paquetes.interface.ts
 
 import { Paquete } from "./paquete.interface";
 
