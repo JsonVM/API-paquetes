@@ -4,7 +4,10 @@
 
 import express, { Request, Response } from "express";
 import * as FacturasService from "./facturasReservas.servicios";
+import * as ReservasService from "../reservas/reservas.servicios";
 import { FacturaBase, Factura } from "./facturaReserva.interface";
+import nodemailer from "nodemailer";
+import { Reserva } from "../reservas/reserva.interface";
 
 /**
  * Definiendo el router
@@ -60,6 +63,84 @@ facturasRouter.post("/", async (req: Request, res: Response) => {
     res.status(500).send(e.message);
   }
 });
+
+// POST de notificacion de factura por correo
+
+facturasRouter.post("/enviar-factura/:correo/:factura", async (req: Request, res: Response) => {
+
+  const id: number = parseInt(req.params.factura, 10);
+
+  try {
+    const item: Factura = await FacturasService.find(id);
+    const reserva: Reserva = await ReservasService.find(item.reserva);
+
+    if (item) {
+      
+      const correo =  req.params.correo;
+      const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port:465,
+                secure:true,
+                auth: {
+                    user: 'jheysonvelez@gmail.com',
+                    pass: 'qmcssjhqcjnylcka',
+                },
+            });
+        
+            var mailOptions = {
+                from: '"Servicio de paquetes de viajes Comfama" <jheysonvelez@gmail.com>',
+                to: correo,
+                subject:"Factura de reserva de paquete de viajes",
+                html: `
+                <b>¡Aquí está tu factura!</b>
+                <p> documento: ${item.documento} </p>
+                <p> nombre: ${item.nombre} </p>
+                <p> fecha: ${item.fecha} </p>
+                <p> reserva: ${reserva.fecha_salida} nombre: ${reserva.nombre_completo} paquete: ${reserva.paquete_viajes} </p>
+                <p> subtotal: ${item.subtotal} </p>
+                <p> impuestos: ${item.impuestos} </p>
+                <p> total: ${item.total} </p>
+
+                <table class="default">
+
+                <tr>
+
+                  <td>nombre: ${item.nombre}</td>
+                  <td>documento: ${item.documento}</td>
+
+                </tr>
+
+                <tr>
+
+                  <td>Celda 4</td>
+
+                  <td>Celda 5</td>
+
+                  <td>Celda 6</td>
+
+                </tr>
+
+              </table>
+                `
+            }
+
+
+            transporter.sendMail(mailOptions, (error, info)=> {
+                if(error){
+                    res.status(500).send(error.message)
+                } else {
+                    res.status(200).send({correo, mensaje:"Correo enviado exitosamente, revisa tu correo, a veces puede aparecer en la seccion de spam",info});
+                }
+            }) 
+
+    } else {
+      res.status(404).send("Factura no encontrada");
+    }
+  } catch (e:any) {
+    res.status(500).send(e.message);
+  }
+ 
+})
 
 // PUT facturas/:id
 

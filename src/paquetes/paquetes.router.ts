@@ -5,6 +5,8 @@
 import express, { Request, Response } from "express";
 import * as PaquetesService from "./paquetes.servicios";
 import { PaqueteBase, Paquete } from "./paquete.interface";
+import { modeloPaquetes } from "../models/paquetes.model";
+import {conexion}  from "../mongo/conexion";
 
 /**
  * Router Definition
@@ -27,6 +29,41 @@ paquetesRouter.get("/", async (req: Request, res: Response) => {
     } catch (e) {
       res.status(500).send(e);
     }
+});
+
+/**
+ * Get a los paquetes que se encuentran en la base de datos 
+ */
+paquetesRouter.get("/DB/", async (req: Request, res: Response) => {
+  try {
+    await conexion;
+
+    const paquetes: Paquete[] | any = await modeloPaquetes.find();
+
+    res.status(200).send(paquetes);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
+paquetesRouter.get("/amadeus", async (req: Request, res: Response) => {
+
+  try {
+
+    const paquetes_amadeus = await PaquetesService.amaprueba();
+    console.log(paquetes_amadeus);
+    
+
+    if (paquetes_amadeus) {
+      return res.status(200).send(paquetes_amadeus);
+    } else {
+      res.status(404).send("Paquete no encontrado");
+    }
+
+    
+  } catch (e:any) {
+    res.status(500).send(e.message);
+  }
 });
 
 // GET paquetes/:id
