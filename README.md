@@ -229,3 +229,6 @@ localhost:7000/api/v1/facturasReservas/DB/`{id de la reserva de paquete de viaje
 
 ## Notificar via correo con la factura
 
+      Ejemplo de envio de correo con la informacion de una factura, de momento manda la info en forma de json
+
+      localhost:7000/api/v1/facturasReservas/enviar-factura/mariafernandahenaoherrera@gmail.com/615bbe4eda803be2b5be43db
