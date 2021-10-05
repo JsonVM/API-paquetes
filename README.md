@@ -48,7 +48,7 @@ api de paquetes de viajes
  
  abrir el .env
 
- `escribir: PORT=7000`
+      escribir: PORT=7000
 
  ## correr el proyecto de manera local
 
