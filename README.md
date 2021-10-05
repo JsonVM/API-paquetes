@@ -5,6 +5,10 @@ api de paquetes de viajes
 
       https://paquetes-comfama.herokuapp.com/
 
+## repositorio 
+      
+      https://github.com/JsonVM/API-paquetes/
+
 ### paquete de viajes
 
 - nombre
@@ -101,4 +105,127 @@ localhost:7000/api/v1/paquetes/DB/`{id del paquete de viajes}`
    "descripcion": "descripcion paquete 5 actualizado"
 }`
 
+## Reservas de paquetes de viajes
+
+~~~
+
+ Traer todas las reservas de viajes
+
+ localhost:7000/api/v1/reservas/DB/
+
+~~~
+
+~~~
+
+ Crear una reserva de paquete de viajes 
+
+ localhost:7000/api/v1/reservas/DB/
+
+~~~
+
+### adicional debemos pasarle un body en formato json con la info de una reserva de un paquete:
+
+`{
+   "paquete_viajes": "paquete 1",
+        "fecha_salida": "2021-10-05T01:42:03.003Z",
+        "numero_adultos": 2,
+        "numero_niños": 1,
+        "cliente": "1",
+        "nombre_completo": "Jheyson vélez Marín",
+        "e_mail": "jheyson.v.m1@gmail.com",
+        "numero_telefonico": "3195097744",
+        "ciudad_residencia": "Itagui"
+    }`
+
+~~~
+
+Eliminar una reserva de paquete de viajes
+
+localhost:7000/api/v1/reservas/DB/`{id de la reserva del paquete de viajes}`
+
+~~~
+
+~~~
+
+Actualizar una reserva de paquete de viajes
+
+localhost:7000/api/v1/reservas/DB/`{id de la reserva de paquete de viajes}`
+
+~~~
+
+### adicional debemos pasarle un body en formato json con la info de una reserva de un paquete:
+
+`{
+        "_id": "615badf431b1d5cfae048e8f",
+        "paquete_viajes": "paquete 3",
+        "fecha_salida": "2021-11-05T01:42:03.003Z",
+        "numero_adultos": 2,
+        "numero_niños": 2,
+        "cliente": "1",
+        "nombre_completo": "Mateo Montoya aristizabal.",
+        "e_mail": "mateomon2882@gmail.com",
+        "numero_telefonico": "3195097744",
+        "ciudad_residencia": "Envigadoo"
+}`
+
+## Facturas de reservas
+
+~~~
+
+ Traer todas las facturas de reservas
+
+ localhost:7000/api/v1/facturasReservas/DB/
+
+~~~
+
+~~~
+
+ Crear una factura de reservas
+
+ localhost:7000/api/v1/reservas/DB/
+
+~~~
+
+### adicional debemos pasarle un body en formato json con la info de una factura de una reserva:
+
+`{
+        "reserva": "615badca31b1d5cfae048e8d",
+        "documento": "1001618278",
+        "nombre": "Jheyson Velez Marín",
+        "fecha": "2021-10-05T02:51:57.631Z",
+        "subtotal": 1000000,
+        "impuestos": 190000,
+        "total": 1190000
+    }`
+
+~~~
+
+Eliminar una factura de una reserva
+
+localhost:7000/api/v1/facturasReservas/DB/`{id de la factura de reserva}`
+
+~~~
+
+~~~
+
+Actualizar una factura de reserva
+
+localhost:7000/api/v1/facturasReservas/DB/`{id de la reserva de paquete de viajes}`
+
+~~~
+
+### adicional debemos pasarle un body en formato json con la info de una factura de una reserva:
+
+`{
+        "reserva": "615bade931b1d5cfae048e8e",
+        "documento": "10011",
+        "nombre": "Maria Fernanda Henao Herrera",
+        "fecha": "2021-10-05T02:51:57.631Z",
+        "subtotal": 2000000,
+        "impuestos": 380000,
+        "total": 2380000
+    }`
+
+
+## Notificar via correo con la factura
 
