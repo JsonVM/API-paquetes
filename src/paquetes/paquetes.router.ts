@@ -52,8 +52,8 @@ paquetesRouter.get("/amadeus", async (req: Request, res: Response) => {
 });
 
 // GET paquetes/:id
-
-paquetesRouter.get("/DB/:id", async (req: Request, res: Response) => {
+/*
+paquetesRouter.get("/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
 
   try {
@@ -67,7 +67,7 @@ paquetesRouter.get("/DB/:id", async (req: Request, res: Response) => {
   } catch (e:any) {
     res.status(500).send(e.message);
   }
-});
+});*/
 
 // POST paquetes
 
