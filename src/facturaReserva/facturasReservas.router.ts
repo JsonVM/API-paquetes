@@ -8,7 +8,11 @@ import * as ReservasService from "../reservas/reservas.servicios";
 import { FacturaBase, Factura } from "./facturaReserva.interface";
 import nodemailer from "nodemailer";
 import { Reserva } from "../reservas/reserva.interface";
+
 import { modeloFacturas } from "../models/facturas.model";
+import { modeloReservas } from "../models/reservas.model";
+import { modeloPaquetes } from "../models/paquetes.model";
+
 import {conexion}  from "../mongo/conexion";
 
 /**
@@ -71,11 +75,14 @@ facturasRouter.post("/", async (req: Request, res: Response) => {
 
 facturasRouter.post("/enviar-factura/:correo/:factura", async (req: Request, res: Response) => {
 
-  const id: number = parseInt(req.params.factura, 10);
+  const id = req.params.factura;
 
   try {
-    const item: Factura = await FacturasService.find(id);
-    const reserva: Reserva = await ReservasService.find(item.reserva);
+    const item:any = await modeloFacturas.findById(id);
+    const reserva:any = await modeloReservas.findById(item.reserva);
+
+    var informacion = JSON.stringify(item)
+    var informacion_reserva = JSON.stringify(reserva) 
 
     if (item) {
       
@@ -104,26 +111,14 @@ facturasRouter.post("/enviar-factura/:correo/:factura", async (req: Request, res
                 <p> impuestos: ${item.impuestos} </p>
                 <p> total: ${item.total} </p>
 
-                <table class="default">
 
-                <tr>
+                <hr>
 
-                  <td>nombre: ${item.nombre}</td>
-                  <td>documento: ${item.documento}</td>
+                <p> FACTURA: ${informacion} </p>
 
-                </tr>
+                <hr>
 
-                <tr>
-
-                  <td>Celda 4</td>
-
-                  <td>Celda 5</td>
-
-                  <td>Celda 6</td>
-
-                </tr>
-
-              </table>
+                <p> RESERVA: ${informacion_reserva} </p>
                 `
             }
 

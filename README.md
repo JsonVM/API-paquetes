@@ -1,6 +1,10 @@
 # API-paquetes
 api de paquetes de viajes
 
+## uri pricipal 
+
+      https://paquetes-comfama.herokuapp.com/
+
 ### paquete de viajes
 
 - nombre
