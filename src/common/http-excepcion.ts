@@ -1,5 +1,6 @@
 // src/common/http-excepcion.ts
 
+//Mensages de error de excepcion de http
 export default class HttpException extends Error {
     statusCode?: number;
     status?: number;

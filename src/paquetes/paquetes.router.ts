@@ -31,21 +31,6 @@ paquetesRouter.get("/", async (req: Request, res: Response) => {
     }
 });
 
-/**
- * Get a los paquetes que se encuentran en la base de datos 
- */
-paquetesRouter.get("/DB/", async (req: Request, res: Response) => {
-  try {
-    await conexion;
-
-    const paquetes: Paquete[] | any = await modeloPaquetes.find();
-
-    res.status(200).send(paquetes);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
 paquetesRouter.get("/amadeus", async (req: Request, res: Response) => {
 
   try {
@@ -131,5 +116,85 @@ paquetesRouter.delete("/:id", async (req: Request, res: Response) => {
     res.sendStatus(204);
   } catch (e:any) {
     res.status(500).send(e.message);
+  }
+});
+
+
+/**
+ * 
+ * A partir de aqui las peticiones son trabajadas desde una base de datos en mongoDB
+ * 
+ */
+
+/**
+ * Get a los paquetes que se encuentran en la base de datos 
+ */
+ paquetesRouter.get("/DB/", async (req: Request, res: Response) => {
+  try {
+    await conexion;
+
+    const paquetes: Paquete[] | any = await modeloPaquetes.find();
+
+    res.status(200).send(paquetes);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
+/**
+ * Post a los paquetes que se encuentran en la base de datos
+ */
+ paquetesRouter.post("/DB/", async (req: Request, res: Response) => {
+  try {
+    await conexion;
+    const paquete: PaqueteBase = req.body;
+
+    const paquete_creado = await modeloPaquetes.insertMany(paquete)
+
+    res.status(201).json(paquete_creado);
+  } catch (e:any) {
+    res.status(500).send(e.message);
+  }
+});
+
+/**
+ * Delete a un paquete en la base de datos
+ */
+paquetesRouter.delete("/DB/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const paquete = await modeloPaquetes.findById(id);
+    if (paquete) {
+      await paquete?.remove();
+      res.sendStatus(204).send("paquete eliminado correctamente");
+    }
+    res.sendStatus(204);
+  } catch (e:any) {
+    res.status(500).send(e.message);
+  }
+});
+
+/**
+ * Put a un paquete en la base de datos
+ */
+
+ paquetesRouter.put("/DB/:id", async (req: Request, res: Response) => {
+  const id = req.params.id
+
+  try {
+    const paquete_actualizar = req.body;
+
+    const paquete_existente = await modeloPaquetes.findById(id);
+
+    if (paquete_existente) {
+      paquete_existente.overwrite(paquete_actualizar);
+      await paquete_existente.save();
+      return res.status(201).json(paquete_actualizar);
+    }
+
+    res.status(200).json('no se pudo actualizar');
+
+  } catch (e:any) {
+    res.status(500).send(e);
   }
 });
