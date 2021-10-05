@@ -46,7 +46,10 @@ api de paquetes de viajes
 
  `npm run dev`
 
-## Ejemplos de uso del api
+
+# Ejemplos de uso del api
+
+## Paquetes de viajes ( db )
 
 ~~~
 
