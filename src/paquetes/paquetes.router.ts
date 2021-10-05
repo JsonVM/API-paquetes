@@ -53,7 +53,7 @@ paquetesRouter.get("/amadeus", async (req: Request, res: Response) => {
 
 // GET paquetes/:id
 
-paquetesRouter.get("/:id", async (req: Request, res: Response) => {
+paquetesRouter.get("/DB/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
 
   try {
